@@ -28,6 +28,6 @@ module.exports = function modelRecipe (sequelize) {
     steps: {
       type: DataTypes.ARRAY(DataTypes.JSONB),
       allowNull: false,
-    },
+    }
   });
 };
