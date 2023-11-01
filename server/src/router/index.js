@@ -2,6 +2,6 @@ const { Router } = require("express");
 
 const router = Router();
 
-router.use("/foods", );
+router.use("/foods", ()=>{});
 
 module.exports = router;
