@@ -33,9 +33,41 @@ const allRecipeAPI = async () => {
     return api;*/
 }
 
+//trae todo las receta
 const allRecipe = async () => {
     const [allRecipesDB, allRecipesAPI ]= await Promise.all([allRecipeDB(),allRecipeAPI()]);
     return [...allRecipesAPI, ...allRecipesDB];
+}
+
+//busca por id en DB
+const idRecipes = async (id) => {
+    if(isNaN(id)){
+        const response = await recipe.findByPk(id);
+        return response;
+    }
+    const api = await fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${DB_APi_KEY}`)
+    .then((data)=> data.json())
+    .then(responseApi => {
+        const responseInfo = {
+            id: responseApi.id,
+            title: responseApi.title,
+            image: responseApi.image,
+            summary: responseApi.summary.replace(/<[^>]*>/g, ""),
+            healthScore: responseApi.healthScore,
+            steps: responseApi.analyzedInstructions[0]?.steps.map((e)=>{
+                return{
+                    number: e.number,
+                    step: e.step
+                }
+            }),
+            score: responseApi.winePairing.productMatches[0]?.score,
+            diets: responseApi.diets.map((e)=> {
+                return {name: e}
+            }),
+           }
+           return responseInfo
+            })
+    return api;
 }
 
 const addRecipe = async (title, image, summary, healthScore, steps, diets) => {
@@ -47,5 +79,6 @@ const addRecipe = async (title, image, summary, healthScore, steps, diets) => {
 
 module.exports = {
     allRecipe,
+    idRecipes,
     addRecipe
 }

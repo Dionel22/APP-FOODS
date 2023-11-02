@@ -1,6 +1,7 @@
-const { allRecipe, addRecipe } = require("../../controllers/ControllerRecipe/controllerRecipe");
+const { allRecipe, addRecipe, idRecipes } = require("../../controllers/ControllerRecipe/controllerRecipe");
 const {recipe} = require("../../db");
 
+//trae todas la receta
 const getAllRecipe = async (req, res) => {
     try {
         const response = await allRecipe();
@@ -11,6 +12,19 @@ const getAllRecipe = async (req, res) => {
     }
 }
 
+//busca por ID
+const getByIdRecipe = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const response = await idRecipes(id);
+        return res.status(200).json(response);
+    } catch (error) {
+        console.log("error", error.message);
+        return res.status(400).json({error: error.message});
+    }
+}
+
+//crea la receta
 const postRecipe = async (req, res) => {
     const {   
       title,
@@ -31,5 +45,6 @@ const postRecipe = async (req, res) => {
 
 module.exports = {
     getAllRecipe,
+    getByIdRecipe,
     postRecipe
 }
