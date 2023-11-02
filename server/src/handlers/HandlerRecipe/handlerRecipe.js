@@ -1,8 +1,9 @@
+const { allRecipe, addRecipe } = require("../../controllers/ControllerRecipe/controllerRecipe");
 const {recipe} = require("../../db");
 
 const getAllRecipe = async (req, res) => {
     try {
-        const response = await recipe.findAll();
+        const response = await allRecipe();
         return res.status(200).json(response);
     } catch (error) {
         console.log("error", error.message);
@@ -16,10 +17,11 @@ const postRecipe = async (req, res) => {
       image,
       summary,
       healthScore,
-      steps
+      steps, 
+      diets
     } = req.body;
     try {
-        const response = await recipe.findAll();
+        const response = await addRecipe(title, image, summary, healthScore, steps, diets);
         return res.status(200).json(response);
     } catch (error) {
         console.log("error", error.message);
