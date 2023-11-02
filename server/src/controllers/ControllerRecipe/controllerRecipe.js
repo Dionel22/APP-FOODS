@@ -39,12 +39,10 @@ const allRecipe = async () => {
 }
 
 const addRecipe = async (title, image, summary, healthScore, steps, diets) => {
-    console.log(title)
-    console.log(image)
-    console.log( summary)
-    console.log(healthScore)
-    console.log(steps)
-    console.log(diets)
+    const createRecipe = await recipe.create({title, image, summary, healthScore, steps});
+    const dbase = await diet.findAll({ where: { name: diets } });
+    await createRecipe.addDiet(dbase);
+    return createRecipe; 
 }
 
 module.exports = {
