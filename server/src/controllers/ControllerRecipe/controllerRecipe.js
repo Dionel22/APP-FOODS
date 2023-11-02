@@ -2,13 +2,17 @@ require('dotenv').config();
 const { DB_APi_KEY } = process.env;
 const { recipe, diet } = require("../../db");
 
+//trae receta de la BD
 const allRecipeDB = async () => {
-    const response = await recipe.findAll();
+    const response = await recipe.findAll({
+        include: { model: diet, attributes: ["name"], through: { attributes: [] } }
+    });
     return response;
 }
 
+//trae  receta de la API
 const allRecipeAPI = async () => {
-    /*const api = await fetch(`https://api.spoonacular.com/recipes/complexSearch?number=100&offset=0&addRecipeInformation=true&apiKey=${DB_APi_KEY}`)
+    const api = await fetch(`https://api.spoonacular.com/recipes/complexSearch?number=100&offset=0&addRecipeInformation=true&apiKey=${DB_APi_KEY}`)
     .then((data)=> data.json())
     .then(data => {
         return data.results.map(e =>{
@@ -30,7 +34,7 @@ const allRecipeAPI = async () => {
             }
         })
     })
-    return api;*/
+    return api;
 }
 
 //trae todo las receta
@@ -39,7 +43,7 @@ const allRecipe = async () => {
     return [...allRecipesAPI, ...allRecipesDB];
 }
 
-//busca por id en DB
+//busca por id en DB y API 
 const idRecipes = async (id) => {
     if(isNaN(id)){
         const response = await recipe.findByPk(id);
@@ -70,6 +74,7 @@ const idRecipes = async (id) => {
     return api;
 }
 
+// agrega Receta
 const addRecipe = async (title, image, summary, healthScore, steps, diets) => {
     const createRecipe = await recipe.create({title, image, summary, healthScore, steps});
     const dbase = await diet.findAll({ where: { name: diets } });
