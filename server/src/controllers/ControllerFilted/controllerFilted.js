@@ -33,14 +33,14 @@ const filted = async (filters) => {
 
       let response;
       if(filters.title != null){
-        console.log("entra 1");
+        //console.log("entra 1");
          response = await apiData.filter((e)=> e.title.includes(filters.title));
       }
       if(filters.diet != null){
-        console.log("entra 2");
+        //console.log("entra 2");
          response = await apiData.filter((e)=> e.diets?.some(diet => diet.name === filters.diet));
       }
-      console.log("res", response);
+      //console.log("res", response);
       if(filters.title != null || filters.diet != null){
         return response;
       }
