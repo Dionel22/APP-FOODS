@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "start": "node backend/server.js",
+    "start:frontend": "cd frontend && npm start",
+    "start:backend": "npm start"
+  },
   "dependencies": {
     "dotenv": "^16.3.1"
   }
