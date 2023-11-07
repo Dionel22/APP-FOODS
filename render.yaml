@@ -1,6 +1,9 @@
 web:
-
-  - name: server
+  - name: Client
+    directory: client
+    buildCommand: npm install
+    startCommand: npm start
+  - name: Server
     directory: server
     buildCommand: npm install
     startCommand: npm start
