@@ -1,0 +1,10 @@
+web:
+
+  - name: server
+    directory: server
+    buildCommand: npm install
+    startCommand: npm start
+
+
+
+
