@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start:server": "node server/server.js",
+    "start:server": "cd server && npm start",
     "start:frontend": "cd client && npm start"
     
   },
