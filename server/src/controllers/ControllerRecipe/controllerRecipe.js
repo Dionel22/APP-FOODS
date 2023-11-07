@@ -3,7 +3,7 @@ const { DB_APi_KEY } = process.env;
 const { recipe, diet } = require("../../db");
 
 //trae receta de la BD
-const allRecipeDB = async () => {
+const allRecipe = async () => {
     const response = await recipe.findAll({
         include: { model: diet, attributes: ["name"], through: { attributes: [] } }
     });
@@ -37,11 +37,6 @@ const allRecipeAPI = async () => {
     return api;
 }
 
-//trae todo las receta
-const allRecipe = async () => {
-    const [allRecipesDB, allRecipesAPI ]= await Promise.all([allRecipeDB(),allRecipeAPI()]);
-    return [...allRecipesAPI, ...allRecipesDB];
-}
 
 //busca por id en DB y API 
 const idRecipes = async (id) => {
